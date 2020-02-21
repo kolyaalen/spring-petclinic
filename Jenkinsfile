@@ -9,9 +9,9 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            when {
-                branch 'master'
-            }
+         //   when {
+         //       branch 'master'
+         //   }
             steps {
                 script {
                     app = docker.build("kolyaalen/train-task")
