@@ -9,10 +9,11 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            //when {
-            //    branch 'master'
-            //}
+            // when {
+            //     branch 'master'
+            // }
             steps {
+                echo "Build Docker Image step"
                 script {
                     app = docker.build("kolyaalen/task")
                     app.inside {
@@ -22,14 +23,16 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-           // when {
-           //     branch 'master'
-           //}
+            // when {
+            //     branch 'master'
+            // }
             steps {
                 script {
+                    echo "Push Docker Image step"
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
+                        echo "${env.BUILD_NUMBER}"
                     }
                 }
             }
