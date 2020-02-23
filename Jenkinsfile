@@ -16,9 +16,9 @@ pipeline {
                 echo "Build Docker Image step"
                 script {
                     app = docker.build("kolyaalen/task")
-                    app.inside {
-                        sh 'echo $(curl localhost:8080)'
-                    }
+                   // app.inside {
+                   //     sh 'echo $(curl localhost:8080)'
+                   // }
                 }
             }
         }
