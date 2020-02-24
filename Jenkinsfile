@@ -34,10 +34,10 @@ pipeline {
                 milestone(1)
                 sshagent(['aws_prod']) {
                     script {
-                        sh ssh -o StrictHostKeyChecking=no \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
+                        sh ssh  StrictHostKeyChecking=no \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
                         try {
-                            sh ssh -o StrictHostKeyChecking=no \"docker stop kolyaalen_task\""
-                            sh ssh -o StrictHostKeyChecking=no  \"docker rm kolyaalen_task\""
+                            sh ssh  StrictHostKeyChecking=no \"docker stop kolyaalen_task\""
+                            sh ssh  StrictHostKeyChecking=no  \"docker rm kolyaalen_task\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
