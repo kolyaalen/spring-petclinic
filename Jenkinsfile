@@ -9,23 +9,14 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            // when {
-            //     branch 'master'
-            // }
             steps {
                 echo "Build Docker Image step"
                 script {
                     app = docker.build("kolyaalen/task")
-                   // app.inside {
-                   //     sh 'echo $(curl localhost:8080)'
-                   // }
                 }
             }
         }
         stage('Push Docker Image') {
-            // when {
-            //     branch 'master'
-            // }
             steps {
                 script {
                     echo "Push Docker Image step"
@@ -38,9 +29,6 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-           // when {
-           //     branch 'master'
-            //}
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
