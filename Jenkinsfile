@@ -34,14 +34,14 @@ pipeline {
                 milestone(1)
                 sshagent(['aws_prod']) {
                     script {
-                        sh ssh  StrictHostKeyChecking=no \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
+                        sh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
                         try {
-                            sh ssh  StrictHostKeyChecking=no \"docker stop kolyaalen_task\""
-                            sh ssh  StrictHostKeyChecking=no  \"docker rm kolyaalen_task\""
+                            sh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \"docker stop kolyaalen_task\""
+                            sh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  \"docker rm kolyaalen_task\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh ssh -o StrictHostKeyChecking=no \"docker run --restart always --name kolyaalen_task -p 8080:8080 -d kolyaalen/task:${env.BUILD_NUMBER}\""
+                        sh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "docker run --restart always --name kolyaalen_task -p 8080:8080 -d kolyaalen/task:${env.BUILD_NUMBER}\""
                     }
                 }
             }
