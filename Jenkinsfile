@@ -32,16 +32,16 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'webserver', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                sshagent(['aws_prod']) {
                     script {
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
+                        sh ssh -o StrictHostKeyChecking=no \"docker pull kolyaalen/task:${env.BUILD_NUMBER}\""
                         try {
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod \"docker stop kolyaalen_task\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod \"docker rm kolyaalen_task\""
+                            sh ssh -o StrictHostKeyChecking=no \"docker stop kolyaalen_task\""
+                            sh ssh -o StrictHostKeyChecking=no  \"docker rm kolyaalen_task\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod \"docker run --restart always --name kolyaalen_task -p 8080:8080 -d kolyaalen/task:${env.BUILD_NUMBER}\""
+                        sh ssh -o StrictHostKeyChecking=no \"docker run --restart always --name kolyaalen_task -p 8080:8080 -d kolyaalen/task:${env.BUILD_NUMBER}\""
                     }
                 }
             }
