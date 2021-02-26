@@ -35,7 +35,7 @@ project {
 }
 
 object Build : BuildType({
-    name = "Build"
+    name = "Petclinic"
     artifactRules = "target/*jar"
 
     vcs {
@@ -56,7 +56,7 @@ object Build : BuildType({
 
 object PetclinicVcs : GitVcsRoot({
     name = "PetclinicVcs"
-    url = "https://github.com/spring-projects/spring-petclinic.git"
+    url = "https://github.com/kolyaalen/spring-petclinic.git"
 })
 
 
