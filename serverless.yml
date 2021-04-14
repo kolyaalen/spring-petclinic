@@ -1,0 +1,7 @@
+# serverless.yml
+
+service: service-lambda
+provider:
+  name: aws
+  stage: beta
+  region: us-east-1
